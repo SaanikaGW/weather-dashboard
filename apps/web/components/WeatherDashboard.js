@@ -69,6 +69,8 @@ export default function WeatherDashboard() {
     .map((item) => item.city?.openmeteo_id)
     .filter(Boolean)
 
+  const [unit, setUnit] = useState('C')
+
   if (loading) {
     return (
       <div>
@@ -101,6 +103,12 @@ export default function WeatherDashboard() {
         </div>
         <div className="flex items-center gap-3">
           {adding && <span className="text-sm text-gray-400">Adding...</span>}
+          <button
+            onClick={() => setUnit((u) => u === 'C' ? 'F' : 'C')}
+            className="text-sm border border-gray-200 rounded-lg px-3 py-2 hover:bg-gray-50 transition text-gray-600"
+          >
+            °{unit === 'C' ? 'F' : 'C'}
+          </button>
           <CitySearch onAdd={handleAdd} existingOpenmeteoIds={existingOpenmeteoIds} />
         </div>
       </div>
@@ -119,6 +127,7 @@ export default function WeatherDashboard() {
               city={item.city}
               weather={item.city?.weather_readings?.[0] ?? null}
               onRemove={handleRemove}
+              unit={unit}
             />
           ))}
         </div>

@@ -1,7 +1,7 @@
 'use client'
 import { getWeatherInfo, formatTemp, formatTime } from '../utils/weather'
 
-export default function WeatherCard({ city, weather, onRemove }) {
+export default function WeatherCard({ city, weather, onRemove, unit = 'C' }) {
   const info = weather ? getWeatherInfo(weather.weather_code) : null
 
   return (
@@ -24,12 +24,12 @@ export default function WeatherCard({ city, weather, onRemove }) {
 
       {weather ? (
         <>
-          <p className="text-5xl font-bold text-gray-900 mb-1">{formatTemp(weather.temperature_c)}</p>
+          <p className="text-5xl font-bold text-gray-900 mb-1">{formatTemp(weather.temperature_c, unit)}</p>
           <p className="text-gray-500 mb-5">{info?.label}</p>
 
           <div className="grid grid-cols-3 gap-2 text-sm border-t border-gray-50 pt-4">
             <div>
-              <p className="font-semibold text-gray-800">{formatTemp(weather.feels_like_c)}</p>
+              <p className="font-semibold text-gray-800">{formatTemp(weather.feels_like_c, unit)}</p>
               <p className="text-gray-400">Feels like</p>
             </div>
             <div>

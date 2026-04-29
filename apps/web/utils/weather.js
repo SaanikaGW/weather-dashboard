@@ -29,8 +29,9 @@ export function getWeatherInfo(code) {
   return WEATHER_CODES[code] ?? { label: 'Unknown', emoji: '🌡️' }
 }
 
-export function formatTemp(temp) {
+export function formatTemp(temp, unit = 'C') {
   if (temp == null) return '--'
+  if (unit === 'F') return `${Math.round(temp * 9 / 5 + 32)}°F`
   return `${Math.round(temp)}°C`
 }
 
