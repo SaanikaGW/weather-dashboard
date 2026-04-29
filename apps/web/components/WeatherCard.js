@@ -44,7 +44,12 @@ export default function WeatherCard({ city, weather, onRemove }) {
             </div>
           </div>
 
-          <p className="text-xs text-gray-300 mt-4">Updated at {formatTime(weather.updated_at)}</p>
+          <p className="text-xs text-gray-300 mt-4">
+            Last polled {formatTime(weather.updated_at)}
+            {new Date() - new Date(weather.updated_at) > 10 * 60 * 1000 && (
+              <span className="ml-1 text-amber-400" title="Worker may be delayed">⚠</span>
+            )}
+          </p>
         </>
       ) : (
         <p className="text-gray-400 text-sm mt-2">Waiting for first weather reading...</p>
