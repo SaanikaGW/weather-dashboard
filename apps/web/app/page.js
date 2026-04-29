@@ -1,7 +1,9 @@
 import Link from 'next/link'
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { auth } from '@clerk/nextjs/server'
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth()
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-sky-100">
       <div className="text-center max-w-xl px-4">
@@ -11,7 +13,14 @@ export default function Home() {
           Live weather for your favorite cities, updated in real time.
         </p>
 
-        <SignedOut>
+        {userId ? (
+          <Link
+            href="/dashboard"
+            className="bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition"
+          >
+            Go to Dashboard
+          </Link>
+        ) : (
           <div className="flex gap-4 justify-center">
             <Link
               href="/sign-in"
@@ -26,19 +35,7 @@ export default function Home() {
               Sign Up
             </Link>
           </div>
-        </SignedOut>
-
-        <SignedIn>
-          <div className="flex gap-4 justify-center items-center">
-            <Link
-              href="/dashboard"
-              className="bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition"
-            >
-              Go to Dashboard
-            </Link>
-            <UserButton />
-          </div>
-        </SignedIn>
+        )}
       </div>
     </div>
   )
